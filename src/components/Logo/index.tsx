@@ -6,28 +6,14 @@ export type LogoProps = {
   hideOnMobile?: boolean
 }
 
-const Logo = ({
-  color = 'white',
-  size = 'normal',
-  hideOnMobile = false
-}: LogoProps) => (
+const Logo = ({ color = 'white', size = 'normal', hideOnMobile = false }: LogoProps) => (
   <S.Wrapper color={color} size={size} hideOnMobile={hideOnMobile}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 158 48"
-      role="img"
-      aria-label="Won Games"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 158 48" role="img" aria-label="Won Games">
       <path
         fill="url(#paint0_linear)"
         d="M.055 15.227L.019 35.872c-.008 4.796 5.336 7.663 9.327 5.004l20.596-13.722L50.49 40.947c3.982 2.672 9.335-.176 9.344-4.972l.034-19.997c.014-7.882-7.549-13.565-15.116-11.361l-.873.254a50.875 50.875 0 01-29.358-.27C7.351 2.366.068 7.716.055 15.226z"
       />
-      <path
-        fill="#110F28"
-        fillOpacity=".15"
-        d="M30.163 27.16l-6.033-4.292a.5.5 0 00-.782.494l1.293 7.298 5.523-3.5z"
-      />
+      <path fill="#110F28" fillOpacity=".15" d="M30.163 27.16l-6.033-4.292a.5.5 0 00-.782.494l1.293 7.298 5.523-3.5z" />
       <path
         stroke="#fff"
         strokeLinecap="round"
@@ -35,36 +21,11 @@ const Logo = ({
         strokeWidth="1.5"
         d="M7.592 7.103c-5.11 2.755-4.519 5-4.519 7.5M57.274 26.103v1M3.052 18.103v2M57.274 30.103v5"
       />
-      <path
-        stroke="#0A0D27"
-        strokeLinecap="round"
-        strokeWidth="2"
-        d="M13.053 15.103v6M10.04 18.103h6.025"
-      />
-      <ellipse
-        fill="#0A0D27"
-        rx="1.506"
-        ry="1.5"
-        transform="matrix(1 0 0 1 44.723 13.66)"
-      />
-      <ellipse
-        fill="#0A0D27"
-        rx="1.506"
-        ry="1.5"
-        transform="matrix(1 0 0 1 49.743 17.603)"
-      />
-      <ellipse
-        fill="#0A0D27"
-        rx="1.506"
-        ry="1.5"
-        transform="matrix(1 0 0 1 44.723 21.603)"
-      />
-      <ellipse
-        fill="#0A0D27"
-        rx="1.506"
-        ry="1.5"
-        transform="matrix(1 0 0 1 39.703 17.603)"
-      />
+      <path stroke="#0A0D27" strokeLinecap="round" strokeWidth="2" d="M13.053 15.103v6M10.04 18.103h6.025" />
+      <ellipse fill="#0A0D27" rx="1.506" ry="1.5" transform="matrix(1 0 0 1 44.723 13.66)" />
+      <ellipse fill="#0A0D27" rx="1.506" ry="1.5" transform="matrix(1 0 0 1 49.743 17.603)" />
+      <ellipse fill="#0A0D27" rx="1.506" ry="1.5" transform="matrix(1 0 0 1 44.723 21.603)" />
+      <ellipse fill="#0A0D27" rx="1.506" ry="1.5" transform="matrix(1 0 0 1 39.703 17.603)" />
       <path
         className="text"
         fill="currentColor"
