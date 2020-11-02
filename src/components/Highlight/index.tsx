@@ -7,7 +7,7 @@ export type HighlightProps = {
   backgroundImage: string
   floatImage?: string
   buttonLabel: string
-  buttonlink: string
+  buttonLink: string
   alignment?: 'left' | 'right'
 }
 
@@ -15,7 +15,7 @@ const Highlight = ({
   title,
   subtitle,
   buttonLabel,
-  buttonlink,
+  buttonLink,
   backgroundImage,
   floatImage,
   alignment = 'right'
@@ -25,7 +25,7 @@ const Highlight = ({
     <S.Content>
       <S.Title>{title}</S.Title>
       <S.Subtitle>{subtitle}</S.Subtitle>
-      <Button as="a" href={buttonlink}>
+      <Button as="a" href={buttonLink}>
         {buttonLabel}
       </Button>
     </S.Content>

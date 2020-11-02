@@ -9,7 +9,7 @@ const props = {
   subtitle: 'Heading 2',
   backgroundImage: 'img',
   buttonLabel: 'Buy now',
-  buttonlink: '/link'
+  buttonLink: '/link'
 }
 
 describe('<Highlight />', () => {
