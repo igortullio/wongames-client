@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TextField /> Renders with error 1`] = `
+exports[`<TextField /> should render with error 1`] = `
 .c7 {
   display: inline-block;
   vertical-align: middle;
