@@ -8,7 +8,7 @@ import TextField from '.'
 
 describe('<TextField />', () => {
   it('should render with label', () => {
-    renderWithTheme(<TextField label="Label" labelFor="Field" id="Field" />)
+    renderWithTheme(<TextField label="Label" name="label" />)
 
     expect(screen.getByLabelText('Label')).toBeInTheDocument()
   })
@@ -40,7 +40,7 @@ describe('<TextField />', () => {
   it('should render when disabled', async () => {
     const onInput = jest.fn()
 
-    renderWithTheme(<TextField onInput={onInput} label="TextField" labelFor="TextField" id="TextField" disabled />)
+    renderWithTheme(<TextField onInput={onInput} label="TextField" name="TextField" disabled />)
 
     const input = screen.getByRole('textbox')
     expect(input).toBeDisabled()
@@ -55,7 +55,7 @@ describe('<TextField />', () => {
 
   it('should changes its value when typing', async () => {
     const onInput = jest.fn()
-    renderWithTheme(<TextField onInput={onInput} label="TextField" labelFor="TextField" id="TextField" />)
+    renderWithTheme(<TextField onInput={onInput} label="TextField" name="TextField" />)
 
     const input = screen.getByRole('textbox')
     const text = 'This is my new text'
@@ -70,7 +70,7 @@ describe('<TextField />', () => {
 
   it('should render with error', () => {
     const { container } = renderWithTheme(
-      <TextField icon={<Email data-testid="icon" />} label="TextField" labelFor="TextField" error="Error message" />
+      <TextField icon={<Email data-testid="icon" />} label="TextField" name="TextField" error="Error message" />
     )
 
     expect(screen.getByText('Error message')).toBeInTheDocument()
@@ -79,7 +79,7 @@ describe('<TextField />', () => {
   })
 
   it('should be accessible with tab', () => {
-    renderWithTheme(<TextField label="TextField" labelFor="TextField" id="TextField" />)
+    renderWithTheme(<TextField label="TextField" name="TextField" />)
 
     const input = screen.getByLabelText('TextField')
     expect(document.body).toHaveFocus()
@@ -89,7 +89,7 @@ describe('<TextField />', () => {
   })
 
   it('should not be accessible with tab when disabled', () => {
-    renderWithTheme(<TextField label="TextField" labelFor="TextField" id="TextField" disabled />)
+    renderWithTheme(<TextField label="TextField" name="TextField" disabled />)
 
     const input = screen.getByLabelText('TextField')
     expect(document.body).toHaveFocus()
