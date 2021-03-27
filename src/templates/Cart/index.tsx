@@ -27,7 +27,7 @@ const Cart = ({ recommendedGames, recommendedHighlight, items, total, cards }: C
           My cart
         </Heading>
 
-        {items.length ? (
+        {items?.length ? (
           <S.Content>
             <CartList items={items} total={total} />
 
