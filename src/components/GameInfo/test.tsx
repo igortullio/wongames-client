@@ -6,7 +6,7 @@ import GameInfo from '.'
 const props = {
   title: 'My game title',
   description: 'Game description',
-  price: '210.00'
+  price: 210
 }
 
 describe('<GameInfo />', () => {
