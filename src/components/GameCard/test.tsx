@@ -4,6 +4,7 @@ import { renderWithTheme } from 'utils/tests/helpers'
 import GameCard from '.'
 
 const props = {
+  slug: 'population-zero',
   title: 'Population Zero',
   developer: 'Rockstar Games',
   img: 'https://source.unsplash.com/user/willianjusten/300x140',
@@ -12,12 +13,15 @@ const props = {
 
 describe('<GameCard />', () => {
   it('should render correctly', () => {
-    renderWithTheme(<GameCard {...props} />)
+    const { container } = renderWithTheme(<GameCard {...props} />)
 
     expect(screen.getByRole('heading', { name: /population zero/i })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /rockstar games/i })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: /population zero/i })).toHaveAttribute('src', props.img)
     expect(screen.getByLabelText(/Add to Wishlist/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: props.title })).toHaveAttribute('href', `/game/${props.slug}`)
+
+    expect(container.firstChild).toMatchSnapshot()
   })
 
   it('should render price in label', () => {
