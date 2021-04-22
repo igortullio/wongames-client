@@ -33,6 +33,12 @@ directive @connection(
 """"""
 type Query {
   """"""
+  banner(id: ID!): Banner
+  """"""
+  banners(sort: String, limit: Int, start: Int, where: JSON): [Banner!]!
+  """"""
+  bannersConnection(sort: String, limit: Int, start: Int, where: JSON): BannerConnection
+  """"""
   category(id: ID!): Category
   """"""
   categories(sort: String, limit: Int, start: Int, where: JSON): [Category!]!
@@ -50,6 +56,8 @@ type Query {
   games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
   """"""
   gamesConnection(sort: String, limit: Int, start: Int, where: JSON): GameConnection
+  """"""
+  home: Home
   """"""
   platform(id: ID!): Platform
   """"""
@@ -83,6 +91,273 @@ type Query {
 }
 
 """"""
+type Banner {
+  """"""
+  id: ID!
+  """"""
+  created_at: DateTime!
+  """"""
+  updated_at: DateTime!
+  """"""
+  image: UploadFile
+  """"""
+  title: String!
+  """"""
+  subtitle: String!
+  """"""
+  button: ComponentPageButton
+  """"""
+  ribbon: ComponentPageRibbon
+  """"""
+  created_by: AdminUser
+  """"""
+  updated_by: AdminUser
+}
+
+"""A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."""
+scalar DateTime
+
+""""""
+type UploadFile {
+  """"""
+  id: ID!
+  """"""
+  created_at: DateTime!
+  """"""
+  updated_at: DateTime!
+  """"""
+  name: String!
+  """"""
+  alternativeText: String
+  """"""
+  caption: String
+  """"""
+  width: Int
+  """"""
+  height: Int
+  """"""
+  formats: JSON
+  """"""
+  hash: String!
+  """"""
+  ext: String
+  """"""
+  mime: String!
+  """"""
+  size: Float!
+  """"""
+  url: String!
+  """"""
+  previewUrl: String
+  """"""
+  provider: String!
+  """"""
+  provider_metadata: JSON
+  """"""
+  created_by: AdminUser
+  """"""
+  updated_by: AdminUser
+  """"""
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph!]!
+}
+
+"""The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."""
+scalar JSON
+
+""""""
+type AdminUser {
+  """"""
+  id: ID!
+  """"""
+  username: String
+}
+
+""""""
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Banner | BannerConnection | BannerAggregator | BannerGroupBy | BannerConnectionId | BannerConnectionCreated_at | BannerConnectionUpdated_at | BannerConnectionImage | BannerConnectionTitle | BannerConnectionSubtitle | BannerConnectionButton | BannerConnectionRibbon | BannerConnectionCreated_by | BannerConnectionUpdated_by | createBannerPayload | updateBannerPayload | deleteBannerPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnectionCreated_at | CategoryConnectionUpdated_at | CategoryConnectionName | CategoryConnectionSlug | CategoryConnectionCreated_by | CategoryConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Developer | DeveloperConnection | DeveloperAggregator | DeveloperGroupBy | DeveloperConnectionId | DeveloperConnectionCreated_at | DeveloperConnectionUpdated_at | DeveloperConnectionName | DeveloperConnectionSlug | DeveloperConnectionCreated_by | DeveloperConnectionUpdated_by | createDeveloperPayload | updateDeveloperPayload | deleteDeveloperPayload | Game | GameConnection | GameAggregator | GameAggregatorSum | GameAggregatorAvg | GameAggregatorMin | GameAggregatorMax | GameGroupBy | GameConnectionId | GameConnectionCreated_at | GameConnectionUpdated_at | GameConnectionName | GameConnectionSlug | GameConnectionShort_description | GameConnectionDescription | GameConnectionPrice | GameConnectionRelease_date | GameConnectionRating | GameConnectionCover | GameConnectionPublisher | GameConnectionCreated_by | GameConnectionUpdated_by | createGamePayload | updateGamePayload | deleteGamePayload | Home | updateHomePayload | deleteHomePayload | Platform | PlatformConnection | PlatformAggregator | PlatformGroupBy | PlatformConnectionId | PlatformConnectionCreated_at | PlatformConnectionUpdated_at | PlatformConnectionName | PlatformConnectionSlug | PlatformConnectionCreated_by | PlatformConnectionUpdated_by | createPlatformPayload | updatePlatformPayload | deletePlatformPayload | Publisher | PublisherConnection | PublisherAggregator | PublisherGroupBy | PublisherConnectionId | PublisherConnectionCreated_at | PublisherConnectionUpdated_at | PublisherConnectionName | PublisherConnectionSlug | PublisherConnectionCreated_by | PublisherConnectionUpdated_by | createPublisherPayload | updatePublisherPayload | deletePublisherPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload | ComponentPageButton | ComponentPageHighlight | ComponentPagePopularGames | ComponentPageRibbon | ComponentPageSection
+
+""""""
+type UsersPermissionsMe {
+  """"""
+  id: ID!
+  """"""
+  username: String!
+  """"""
+  email: String!
+  """"""
+  confirmed: Boolean
+  """"""
+  blocked: Boolean
+  """"""
+  role: UsersPermissionsMeRole
+}
+
+""""""
+type UsersPermissionsMeRole {
+  """"""
+  id: ID!
+  """"""
+  name: String!
+  """"""
+  description: String
+  """"""
+  type: String
+}
+
+""""""
+type UsersPermissionsLoginPayload {
+  """"""
+  jwt: String
+  """"""
+  user: UsersPermissionsMe!
+}
+
+""""""
+type UserPermissionsPasswordPayload {
+  """"""
+  ok: Boolean!
+}
+
+""""""
+type BannerConnection {
+  """"""
+  values: [Banner]
+  """"""
+  groupBy: BannerGroupBy
+  """"""
+  aggregate: BannerAggregator
+}
+
+""""""
+type BannerGroupBy {
+  """"""
+  id: [BannerConnectionId]
+  """"""
+  created_at: [BannerConnectionCreated_at]
+  """"""
+  updated_at: [BannerConnectionUpdated_at]
+  """"""
+  image: [BannerConnectionImage]
+  """"""
+  title: [BannerConnectionTitle]
+  """"""
+  subtitle: [BannerConnectionSubtitle]
+  """"""
+  button: [BannerConnectionButton]
+  """"""
+  ribbon: [BannerConnectionRibbon]
+  """"""
+  created_by: [BannerConnectionCreated_by]
+  """"""
+  updated_by: [BannerConnectionUpdated_by]
+}
+
+""""""
+type BannerConnectionId {
+  """"""
+  key: ID
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionCreated_at {
+  """"""
+  key: DateTime
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionUpdated_at {
+  """"""
+  key: DateTime
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionImage {
+  """"""
+  key: ID
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionTitle {
+  """"""
+  key: String
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionSubtitle {
+  """"""
+  key: String
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionButton {
+  """"""
+  key: ID
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionRibbon {
+  """"""
+  key: ID
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionCreated_by {
+  """"""
+  key: ID
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerConnectionUpdated_by {
+  """"""
+  key: ID
+  """"""
+  connection: BannerConnection
+}
+
+""""""
+type BannerAggregator {
+  """"""
+  count: Int
+  """"""
+  totalCount: Int
+}
+
+""""""
+type createBannerPayload {
+  """"""
+  banner: Banner
+}
+
+""""""
+type updateBannerPayload {
+  """"""
+  banner: Banner
+}
+
+""""""
+type deleteBannerPayload {
+  """"""
+  banner: Banner
+}
+
+""""""
 type Category {
   """"""
   id: ID!
@@ -101,20 +376,6 @@ type Category {
   """"""
   games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
 }
-
-"""A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."""
-scalar DateTime
-
-""""""
-type AdminUser {
-  """"""
-  id: ID!
-  """"""
-  username: String
-}
-
-"""The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."""
-scalar JSON
 
 """"""
 type Game {
@@ -176,7 +437,7 @@ enum ENUM_GAME_RATING {
 }
 
 """"""
-type UploadFile {
+type Publisher {
   """"""
   id: ID!
   """"""
@@ -186,82 +447,53 @@ type UploadFile {
   """"""
   name: String!
   """"""
-  alternativeText: String
-  """"""
-  caption: String
-  """"""
-  width: Int
-  """"""
-  height: Int
-  """"""
-  formats: JSON
-  """"""
-  hash: String!
-  """"""
-  ext: String
-  """"""
-  mime: String!
-  """"""
-  size: Float!
-  """"""
-  url: String!
-  """"""
-  previewUrl: String
-  """"""
-  provider: String!
-  """"""
-  provider_metadata: JSON
+  slug: String!
   """"""
   created_by: AdminUser
   """"""
   updated_by: AdminUser
   """"""
-  related(sort: String, limit: Int, start: Int, where: JSON): [Morph!]!
+  games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
 }
 
 """"""
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Category | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnectionId | CategoryConnectionCreated_at | CategoryConnectionUpdated_at | CategoryConnectionName | CategoryConnectionSlug | CategoryConnectionCreated_by | CategoryConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Developer | DeveloperConnection | DeveloperAggregator | DeveloperGroupBy | DeveloperConnectionId | DeveloperConnectionCreated_at | DeveloperConnectionUpdated_at | DeveloperConnectionName | DeveloperConnectionSlug | DeveloperConnectionCreated_by | DeveloperConnectionUpdated_by | createDeveloperPayload | updateDeveloperPayload | deleteDeveloperPayload | Game | GameConnection | GameAggregator | GameAggregatorSum | GameAggregatorAvg | GameAggregatorMin | GameAggregatorMax | GameGroupBy | GameConnectionId | GameConnectionCreated_at | GameConnectionUpdated_at | GameConnectionName | GameConnectionSlug | GameConnectionShort_description | GameConnectionDescription | GameConnectionPrice | GameConnectionRelease_date | GameConnectionRating | GameConnectionCover | GameConnectionPublisher | GameConnectionCreated_by | GameConnectionUpdated_by | createGamePayload | updateGamePayload | deleteGamePayload | Platform | PlatformConnection | PlatformAggregator | PlatformGroupBy | PlatformConnectionId | PlatformConnectionCreated_at | PlatformConnectionUpdated_at | PlatformConnectionName | PlatformConnectionSlug | PlatformConnectionCreated_by | PlatformConnectionUpdated_by | createPlatformPayload | updatePlatformPayload | deletePlatformPayload | Publisher | PublisherConnection | PublisherAggregator | PublisherGroupBy | PublisherConnectionId | PublisherConnectionCreated_at | PublisherConnectionUpdated_at | PublisherConnectionName | PublisherConnectionSlug | PublisherConnectionCreated_by | PublisherConnectionUpdated_by | createPublisherPayload | updatePublisherPayload | deletePublisherPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
-
-""""""
-type UsersPermissionsMe {
+type Developer {
   """"""
   id: ID!
   """"""
-  username: String!
+  created_at: DateTime!
   """"""
-  email: String!
-  """"""
-  confirmed: Boolean
-  """"""
-  blocked: Boolean
-  """"""
-  role: UsersPermissionsMeRole
-}
-
-""""""
-type UsersPermissionsMeRole {
-  """"""
-  id: ID!
+  updated_at: DateTime!
   """"""
   name: String!
   """"""
-  description: String
+  slug: String!
   """"""
-  type: String
+  created_by: AdminUser
+  """"""
+  updated_by: AdminUser
+  """"""
+  games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
 }
 
 """"""
-type UsersPermissionsLoginPayload {
+type Platform {
   """"""
-  jwt: String
+  id: ID!
   """"""
-  user: UsersPermissionsMe!
-}
-
-""""""
-type UserPermissionsPasswordPayload {
+  created_at: DateTime!
   """"""
-  ok: Boolean!
+  updated_at: DateTime!
+  """"""
+  name: String!
+  """"""
+  slug: String!
+  """"""
+  created_by: AdminUser
+  """"""
+  updated_by: AdminUser
+  """"""
+  games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
 }
 
 """"""
@@ -372,26 +604,6 @@ type updateCategoryPayload {
 type deleteCategoryPayload {
   """"""
   category: Category
-}
-
-""""""
-type Developer {
-  """"""
-  id: ID!
-  """"""
-  created_at: DateTime!
-  """"""
-  updated_at: DateTime!
-  """"""
-  name: String!
-  """"""
-  slug: String!
-  """"""
-  created_by: AdminUser
-  """"""
-  updated_by: AdminUser
-  """"""
-  games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
 }
 
 """"""
@@ -717,7 +929,7 @@ type deleteGamePayload {
 }
 
 """"""
-type Platform {
+type Home {
   """"""
   id: ID!
   """"""
@@ -725,15 +937,79 @@ type Platform {
   """"""
   updated_at: DateTime!
   """"""
-  name: String!
+  newGames: ComponentPageSection
   """"""
-  slug: String!
+  upcomingGames: ComponentPageSection
+  """"""
+  freeGames: ComponentPageSection
+  """"""
+  popularGames: ComponentPagePopularGames
   """"""
   created_by: AdminUser
   """"""
   updated_by: AdminUser
+}
+
+""""""
+type ComponentPageSection {
+  """"""
+  id: ID!
+  """"""
+  title: String
+  """"""
+  highlight: ComponentPageHighlight
+}
+
+""""""
+type ComponentPageHighlight {
+  """"""
+  id: ID!
+  """"""
+  title: String!
+  """"""
+  subtitle: String!
+  """"""
+  background: UploadFile
+  """"""
+  floatImage: UploadFile
+  """"""
+  buttonLabel: String!
+  """"""
+  buttonLink: String!
+  """"""
+  alignment: ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT
+}
+
+""""""
+enum ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT {
+  """"""
+  right
+  """"""
+  left
+}
+
+""""""
+type ComponentPagePopularGames {
+  """"""
+  id: ID!
+  """"""
+  title: String!
+  """"""
+  highlight: ComponentPageHighlight
   """"""
   games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
+}
+
+""""""
+type updateHomePayload {
+  """"""
+  home: Home
+}
+
+""""""
+type deleteHomePayload {
+  """"""
+  home: Home
 }
 
 """"""
@@ -844,26 +1120,6 @@ type updatePlatformPayload {
 type deletePlatformPayload {
   """"""
   platform: Platform
-}
-
-""""""
-type Publisher {
-  """"""
-  id: ID!
-  """"""
-  created_at: DateTime!
-  """"""
-  updated_at: DateTime!
-  """"""
-  name: String!
-  """"""
-  slug: String!
-  """"""
-  created_by: AdminUser
-  """"""
-  updated_by: AdminUser
-  """"""
-  games(sort: String, limit: Int, start: Int, where: JSON): [Game!]!
 }
 
 """"""
@@ -1555,7 +1811,51 @@ type deleteUserPayload {
 }
 
 """"""
+type ComponentPageButton {
+  """"""
+  id: ID!
+  """"""
+  label: String!
+  """"""
+  link: String!
+}
+
+""""""
+type ComponentPageRibbon {
+  """"""
+  id: ID!
+  """"""
+  text: String
+  """"""
+  color: ENUM_COMPONENTPAGERIBBON_COLOR
+  """"""
+  size: ENUM_COMPONENTPAGERIBBON_SIZE
+}
+
+""""""
+enum ENUM_COMPONENTPAGERIBBON_COLOR {
+  """"""
+  primary
+  """"""
+  secundary
+}
+
+""""""
+enum ENUM_COMPONENTPAGERIBBON_SIZE {
+  """"""
+  small
+  """"""
+  normal
+}
+
+""""""
 type Mutation {
+  """"""
+  createBanner(input: createBannerInput): createBannerPayload
+  """"""
+  updateBanner(input: updateBannerInput): updateBannerPayload
+  """"""
+  deleteBanner(input: deleteBannerInput): deleteBannerPayload
   """"""
   createCategory(input: createCategoryInput): createCategoryPayload
   """"""
@@ -1574,6 +1874,10 @@ type Mutation {
   updateGame(input: updateGameInput): updateGamePayload
   """"""
   deleteGame(input: deleteGameInput): deleteGamePayload
+  """"""
+  updateHome(input: updateHomeInput): updateHomePayload
+  """"""
+  deleteHome: deleteHomePayload
   """"""
   createPlatform(input: createPlatformInput): createPlatformPayload
   """"""
@@ -1603,6 +1907,8 @@ type Mutation {
   """"""
   multipleUpload(refId: ID, ref: String, field: String, source: String, files: [Upload]!): [UploadFile]!
   """"""
+  updateFileInfo(id: ID!, info: FileInfoInput!): UploadFile!
+  """"""
   login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
   """"""
   register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
@@ -1612,6 +1918,108 @@ type Mutation {
   resetPassword(password: String!, passwordConfirmation: String!, code: String!): UsersPermissionsLoginPayload
   """"""
   emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
+}
+
+""""""
+input createBannerInput {
+  """"""
+  data: BannerInput
+}
+
+""""""
+input BannerInput {
+  """"""
+  image: ID
+  """"""
+  title: String!
+  """"""
+  subtitle: String!
+  """"""
+  button: ComponentPageButtonInput
+  """"""
+  ribbon: ComponentPageRibbonInput
+  """"""
+  created_by: ID
+  """"""
+  updated_by: ID
+}
+
+""""""
+input ComponentPageButtonInput {
+  """"""
+  label: String
+  """"""
+  link: String!
+}
+
+""""""
+input ComponentPageRibbonInput {
+  """"""
+  text: String
+  """"""
+  color: ENUM_COMPONENTPAGERIBBON_COLOR
+  """"""
+  size: ENUM_COMPONENTPAGERIBBON_SIZE
+}
+
+""""""
+input updateBannerInput {
+  """"""
+  where: InputID
+  """"""
+  data: editBannerInput
+}
+
+""""""
+input InputID {
+  """"""
+  id: ID!
+}
+
+""""""
+input editBannerInput {
+  """"""
+  image: ID
+  """"""
+  title: String
+  """"""
+  subtitle: String
+  """"""
+  button: editComponentPageButtonInput
+  """"""
+  ribbon: editComponentPageRibbonInput
+  """"""
+  created_by: ID
+  """"""
+  updated_by: ID
+}
+
+""""""
+input editComponentPageButtonInput {
+  """"""
+  id: ID
+  """"""
+  label: String
+  """"""
+  link: String
+}
+
+""""""
+input editComponentPageRibbonInput {
+  """"""
+  id: ID
+  """"""
+  text: String
+  """"""
+  color: ENUM_COMPONENTPAGERIBBON_COLOR
+  """"""
+  size: ENUM_COMPONENTPAGERIBBON_SIZE
+}
+
+""""""
+input deleteBannerInput {
+  """"""
+  where: InputID
 }
 
 """"""
@@ -1640,12 +2048,6 @@ input updateCategoryInput {
   where: InputID
   """"""
   data: editCategoryInput
-}
-
-""""""
-input InputID {
-  """"""
-  id: ID!
 }
 
 """"""
@@ -1802,6 +2204,70 @@ input editGameInput {
 input deleteGameInput {
   """"""
   where: InputID
+}
+
+""""""
+input updateHomeInput {
+  """"""
+  data: editHomeInput
+}
+
+""""""
+input editHomeInput {
+  """"""
+  newGames: editComponentPageSectionInput
+  """"""
+  upcomingGames: editComponentPageSectionInput
+  """"""
+  freeGames: editComponentPageSectionInput
+  """"""
+  popularGames: editComponentPagePopularGameInput
+  """"""
+  created_by: ID
+  """"""
+  updated_by: ID
+}
+
+""""""
+input editComponentPageSectionInput {
+  """"""
+  id: ID
+  """"""
+  title: String
+  """"""
+  highlight: editComponentPageHighlightInput
+}
+
+""""""
+input editComponentPageHighlightInput {
+  """"""
+  id: ID
+  """"""
+  title: String
+  """"""
+  subtitle: String
+  """"""
+  background: ID
+  """"""
+  floatImage: ID
+  """"""
+  buttonLabel: String
+  """"""
+  buttonLink: String
+  """"""
+  alignment: ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT
+}
+
+""""""
+input editComponentPagePopularGameInput {
+  """"""
+  id: ID
+  """"""
+  title: String
+  """"""
+  highlight: editComponentPageHighlightInput
+  """"""
+  games: [ID]
 }
 
 """"""
@@ -2028,6 +2494,16 @@ input deleteUserInput {
 scalar Upload
 
 """"""
+input FileInfoInput {
+  """"""
+  name: String
+  """"""
+  alternativeText: String
+  """"""
+  caption: String
+}
+
+""""""
 input UsersPermissionsLoginInput {
   """"""
   identifier: String!
@@ -2045,6 +2521,58 @@ input UsersPermissionsRegisterInput {
   email: String!
   """"""
   password: String!
+}
+
+""""""
+input HomeInput {
+  """"""
+  newGames: ComponentPageSectionInput
+  """"""
+  upcomingGames: ComponentPageSectionInput
+  """"""
+  freeGames: ComponentPageSectionInput
+  """"""
+  popularGames: ComponentPagePopularGameInput
+  """"""
+  created_by: ID
+  """"""
+  updated_by: ID
+}
+
+""""""
+input ComponentPageSectionInput {
+  """"""
+  title: String
+  """"""
+  highlight: ComponentPageHighlightInput
+}
+
+""""""
+input ComponentPageHighlightInput {
+  """"""
+  title: String!
+  """"""
+  subtitle: String!
+  """"""
+  background: ID
+  """"""
+  floatImage: ID
+  """"""
+  buttonLabel: String!
+  """"""
+  buttonLink: String!
+  """"""
+  alignment: ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT
+}
+
+""""""
+input ComponentPagePopularGameInput {
+  """"""
+  title: String!
+  """"""
+  highlight: ComponentPageHighlightInput
+  """"""
+  games: [ID]
 }
 
 """"""
