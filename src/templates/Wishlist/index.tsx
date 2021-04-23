@@ -10,11 +10,12 @@ import { Divider } from 'components/Divider'
 
 export type WishlistTemplateProps = {
   games?: GameCardProps[]
+  recommendedTitle: string
   recommendedGames: GameCardProps[]
   recommendedHighlight: HighlightProps
 }
 
-const Wishlist = ({ games = [], recommendedGames, recommendedHighlight }: WishlistTemplateProps) => (
+const Wishlist = ({ games = [], recommendedTitle, recommendedGames, recommendedHighlight }: WishlistTemplateProps) => (
   <Base>
     <Container>
       <Heading lineLeft lineColor="secondary">
@@ -34,7 +35,7 @@ const Wishlist = ({ games = [], recommendedGames, recommendedHighlight }: Wishli
       <Divider />
     </Container>
 
-    <Showcase title="You may like these games" games={recommendedGames} highlight={recommendedHighlight} />
+    <Showcase title={recommendedTitle} games={recommendedGames} highlight={recommendedHighlight} />
   </Base>
 )
 

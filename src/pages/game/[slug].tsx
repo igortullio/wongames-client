@@ -1,13 +1,16 @@
 import Game, { GameTemplateProps } from 'templates/Game'
 
-import gamesMock from 'components/GameCardSlider/mock'
-import highlightMock from 'components/Highlight/mock'
 import { useRouter } from 'next/router'
 import { initializeApollo } from 'utils/apollo'
 import { GetGames, GetGamesVariables } from 'graphql/generated/GetGames'
 import { GET_GAMES, GET_GAME_BY_SLUG } from 'graphql/queries/games'
 import { GetGameBySlug, GetGameBySlugVariables } from 'graphql/generated/GetGameBySlug'
 import { GetStaticProps } from 'next'
+import { GetRecommended } from 'graphql/generated/GetRecommended'
+import { GET_RECOMMENDED } from 'graphql/queries/recommended'
+import { gamesMapper, highlightMapper } from 'utils/mappers'
+import { GET_UPCOMING } from 'graphql/queries/upcoming'
+import { GetUpcoming, GetUpcomingVariables } from 'graphql/generated/GetUpcoming'
 
 const apolloClient = initializeApollo()
 
@@ -37,6 +40,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const game = data.games[0]
 
+  const {
+    data: { recommended }
+  } = await apolloClient.query<GetRecommended>({
+    query: GET_RECOMMENDED
+  })
+
+  const TODAY = new Date().toISOString().slice(0, 10)
+  const { data: upcoming } = await apolloClient.query<GetUpcoming, GetUpcomingVariables>({
+    query: GET_UPCOMING,
+    variables: { date: TODAY }
+  })
+
   return {
     props: {
       revalidate: 60,
@@ -59,9 +74,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         rating: game.rating,
         genres: game.categories.map((category) => category.name)
       },
-      upcomingGames: gamesMock,
-      upcomingHighlight: highlightMock,
-      recommendedGames: gamesMock
+      upcomingTitle: upcoming.showcase?.upcomingGames?.title,
+      upcomingGames: gamesMapper(upcoming.upcomingGames),
+      upcomingHighlight: highlightMapper(upcoming.showcase?.upcomingGames?.highlight),
+      recommendedTitle: recommended?.section?.title,
+      recommendedGames: gamesMapper(recommended?.section?.games)
     }
   }
 }

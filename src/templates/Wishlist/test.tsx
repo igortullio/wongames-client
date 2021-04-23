@@ -8,6 +8,7 @@ import { renderWithTheme } from 'utils/tests/helpers'
 
 const props = {
   games: gameMock,
+  recommendedTitle: 'You may like these games',
   recommendedGames: gameMock,
   recommendedHighlight: highlightMock
 }
